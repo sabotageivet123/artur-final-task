@@ -1,5 +1,5 @@
 ---
-- hosts: "masters, workers"
+- hosts: "master, worker"
   remote_user: ubuntu
   become: yes
   become_method: sudo
@@ -73,5 +73,5 @@
      - name: install kubernetes
        shell: |
                sudo apt-get update
-               sudo apt-get install -y kubelet=1.20.1-00 kubeadm=1.20.1-00 kubectl=1.20.1-00
+               sudo apt-get install -y kubelet=1.24.3-00 kubeadm=1.24.3-00 kubectl=1.24.3-00
                sudo apt-mark hold kubelet kubeadm kubectl
