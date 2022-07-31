@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goserver
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      server: web
+  template:
+    metadata:
+      labels:
+        server: web
+    spec:
+      containers:
+      - name: goserver-final
+        image: adsfadsfasdfasdf1234134sdfasdf/goserver-final:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: goserver-entrypoint
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    server: web
+  ports:
+  - port: 8080
+    targetPort: 8080
+    nodePort: 30001
