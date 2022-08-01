@@ -1,0 +1,19 @@
+- hosts: master
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: yes
+  connection: ssh
+  tasks:
+    - name: generate key
+      shell: |
+        ssh-keygen -o -a 100 -t ed25519 -f ~/.ssh/id_ed25519 -C "master-node" -q -N ""
+      args:
+        chdir: $HOME
+
+    - name: generate key
+      shell: cat ~/.ssh/id_ed25519
+      register: key_for_git_read
+    - debug:
+       msg: "{{ key_for_git_read.stdout }}"

@@ -1,0 +1,22 @@
+version: "3.9"
+    
+services:
+    jenkins:
+        build:
+              context: ./
+              dockerfile: ./Dockerfile
+        restart: always
+        ports:
+            - '8080:8080'
+        volumes:
+            - ./jobs:/var/jenkins_home/jobs:cached
+        environment:
+            - CASC_JENKINS_CONFIG=/var/jenkins_home/casc_configs/jenkins.yaml
+            - ADMIN_PW=${ADMIN_PW}
+            - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+            - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+            - EC2_KEY=${EC2_KEY}
+
+                           
+volumes:
+  jenkins-data:

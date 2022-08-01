@@ -23,7 +23,8 @@ provider "aws" {
 
 resource "aws_instance" "jenkins" {
   ami           = "ami-08d70e59c07c61a3a"
-  instance_type = "t2.micro"
+  instance_type = "t3.micro"
+  key_name      = "final-test"
 
   tags = {
     Name = var.instance_name

@@ -1,0 +1,27 @@
+jenkins:
+  systemMessage: "Jenkins configured automatically by Jenkins Configuration as Code plugin\n\n"
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+       - id: admin
+         password: ${ADMIN_PW}
+
+tool:
+  git:
+    installations:
+      - name: git
+        home: /usr/bin/git
+
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - usernamePassword:
+              description: "AWS credentials"
+              id: "aws-creds"
+              password: ${AWS_SECRET_ACCESS_KEY}
+              scope: GLOBAL
+              username: ${AWS_ACCESS_KEY_ID}
+
+

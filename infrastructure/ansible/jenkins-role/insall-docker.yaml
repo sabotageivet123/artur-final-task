@@ -1,0 +1,41 @@
+---
+- hosts: "jenkins"
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: yes
+  connection: ssh
+
+  tasks:
+     - name: install and configure dependencies
+       shell: |
+               sudo apt-get update && sudo apt-get install -y apt-transport-https curl ca-certificates gnupg lsb-release
+               curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+               curl -s https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+     - name: Create Docker repo file
+       file:
+         path: "/etc/apt/sources.list.d/docker.list"
+         state: "touch"
+
+     - name: Add docker Source
+       blockinfile:
+         path: "/etc/apt/sources.list.d/docker.list"
+         block: |
+               deb https://download.docker.com/linux/ubuntu xenial stable
+
+     - name: install docker
+       shell: |
+               sudo apt-get update
+               sudo apt-get install -y docker-ce docker-ce-cli containerd.io/etc/apt/sources.list.d/docker.list
+     
+     - name: install docker-compose
+       shell: |
+               curl -SL https://github.com/docker/compose/releases/download/v2.7.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+               sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+               sudo chmod +x /usr/local/bin/docker-compose
+
+     - name: add permission for use Docker without sudo
+       shell: | 
+               sudo usermod -aG docker ubuntu 
