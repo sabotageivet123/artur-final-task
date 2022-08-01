@@ -8,7 +8,8 @@ pipeline {
   stages {
     stage('Cloning Git') {
       steps {
-        git url: 'git@github.com:sabotageivet123/artur-final-task.git',
+        git branch: env.JOB_BASE_NAME
+            url: 'git@github.com:sabotageivet123/artur-final-task.git',
             credentialsId: 'repo_key'
       }
     }
