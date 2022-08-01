@@ -6,6 +6,7 @@ services:
               context: ./
               dockerfile: ./Dockerfile
         restart: always
+        user: jenkins
         ports:
             - '8080:8080'
         volumes:
@@ -16,6 +17,7 @@ services:
             - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
             - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
             - EC2_KEY=${EC2_KEY}
+            - REPO_KEY=${REPO_KEY}
 
                            
 volumes:

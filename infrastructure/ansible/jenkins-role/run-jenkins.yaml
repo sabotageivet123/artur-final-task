@@ -1,0 +1,23 @@
+- hosts: jenkins
+  remote_user: ubuntu
+  gather_facts: yes
+  connection: ssh
+  
+  tasks:
+    - name: Clone repo
+      ignore_errors: yes
+      shell: echo "yes" | git clone git@github.com:sabotageivet123/artur-final-task.git
+      args:
+        chdir: $HOME
+  
+    - name: copy .env
+      copy:
+        src: ../../../.env
+        dest: ./artur-final-task/infrastructure/jenkins/.env
+        owner: ubuntu
+
+
+    - name: Run jenkins
+      shell: docker-compose up -d
+      args:
+        chdir: $HOME/artur-final-task/infrastructure/jenkins/

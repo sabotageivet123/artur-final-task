@@ -1,4 +1,4 @@
-- hosts: master
+- hosts: jenkins
   remote_user: ubuntu
   become: yes
   become_method: sudo
@@ -8,7 +8,7 @@
   tasks:
     - name: generate key
       shell: |
-        ssh-keygen -o -a 100 -t ed25519 -f ~/.ssh/id_ed25519 -C "master-node" -q -N ""
+        ssh-keygen -o -a 100 -t ed25519 -f ~/.ssh/id_ed25519 -C "jenkins" -q -N ""
       args:
         chdir: $HOME
 
@@ -20,4 +20,4 @@
 
     - name: Copy join command to local file.
       become: yes
-      local_action: copy content="{{ key_for_git_read.stdout_lines[0] }}" dest="/tmp/key_ed25519_kuber" mode=0777
+      local_action: copy content="{{ key_for_git_read.stdout_lines[0] }}" dest="/tmp/key_ed25519_jenkins" mode=0777

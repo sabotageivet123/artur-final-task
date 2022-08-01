@@ -7,6 +7,17 @@ jenkins:
        - id: admin
          password: ${ADMIN_PW}
 
+jobs:
+  - script: |
+      multibranchPipelineJob('artur-last-task') {
+          branchSources {
+              git {
+                  id = 'configuration-as-code'
+                  remote('git@github.com:sabotageivet123/artur-final-task.git')
+              }
+          }
+      }
+
 tool:
   git:
     installations:
@@ -23,5 +34,12 @@ credentials:
               password: ${AWS_SECRET_ACCESS_KEY}
               scope: GLOBAL
               username: ${AWS_ACCESS_KEY_ID}
-
+          - basicSSHUserPrivateKey:
+              scope: SYSTEM
+              id: repo_key
+              username: artur
+              description: "Repo key"
+              privateKeySource:
+                directEntry:
+                  privateKey: ${EC2_KEY}
 
