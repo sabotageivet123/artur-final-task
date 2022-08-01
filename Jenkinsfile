@@ -9,7 +9,7 @@ pipeline {
     stage('Cloning Git') {
       steps {
         git url: 'git@github.com:sabotageivet123/artur-final-task.git',
-            credentialId: 'repo_key'
+            credentialsId: 'repo_key'
       }
     }
     stage('Building image') {
