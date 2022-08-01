@@ -6,11 +6,8 @@ services:
               context: ./
               dockerfile: ./Dockerfile
         restart: always
-        user: jenkins
         ports:
             - '8080:8080'
-        volumes:
-            - ./jobs:/var/jenkins_home/jobs:cached
         environment:
             - CASC_JENKINS_CONFIG=/var/jenkins_home/casc_configs/jenkins.yaml
             - ADMIN_PW=${ADMIN_PW}
