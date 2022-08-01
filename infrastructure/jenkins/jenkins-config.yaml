@@ -8,7 +8,7 @@ jenkins:
          password: ${ADMIN_PW}
 
 jobs:
-  - script: |
+  - script: >
       multibranchPipelineJob('artur-last-task') {
           branchSources {
               git {
@@ -36,7 +36,7 @@ credentials:
               scope: GLOBAL
               username: ${AWS_ACCESS_KEY_ID}
           - basicSSHUserPrivateKey:
-              scope: SYSTEM
+              scope: GLOBAL
               id: repo_key
               username: artur
               description: "Repo key"

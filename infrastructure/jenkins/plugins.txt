@@ -122,3 +122,4 @@ pubsub-light:1.16
 javax-mail-api:1.6.2-6
 checks-api:1.7.4
 display-url-api:2.3.6
+job-dsl:1.81

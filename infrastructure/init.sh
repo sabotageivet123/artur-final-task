@@ -21,6 +21,11 @@ function init-infra-dev() {
   cd $CURDIR
 }
 
+function destroy-infra-dev() {
+  cd $TERDIR/develop; terraform destroy -auto-approve; cd $CURDIR;
+  cd $TERDIR/jenkins; terraform destroy -auto-approve; cd $CURDIR;
+}
+
 function gh_add_key() {
     echo 'Add key to github'
     KEY='{"title":"Kuber","key":"'$(cat /tmp/key_ed25519_kuber)'","read_only":true}'
