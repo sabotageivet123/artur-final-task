@@ -7,11 +7,11 @@
       ignore_errors: yes
       become: yes
       become_user: kube
-      shell: git clone git@github.com:sabotageivet123/artur-final-task.git
+      shell: echo "yes" | git clone git@github.com:sabotageivet123/artur-final-task.git
       args:
         chdir: $HOME
     
-    - name: run k8s
+    - name: run app
       become: yes
       become_user: kube
       shell: kubectl apply -f ./artur-final-task/infrastructure/k8s/webserver.yml
