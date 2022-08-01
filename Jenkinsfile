@@ -8,9 +8,7 @@ pipeline {
   stages {
     stage('Cloning Git') {
       steps {
-
-        git branch: $JOB_NAME,
-            url: 'git@github.com:sabotageivet123/artur-final-task.git',
+        git url: 'git@github.com:sabotageivet123/artur-final-task.git',
             credentialsId: 'repo_key'
       }
     }
