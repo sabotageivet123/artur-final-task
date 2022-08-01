@@ -13,25 +13,21 @@ pipeline {
             credentialsId: 'repo_key'
       }
     }
-    stage('Building image') {
-      steps{
-        script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
-        }
-      }
+    stage('Build image') {
+        /* This builds the actual image; synonymous to
+         * docker build on the command line */
+        app = docker.build(registry)
     }
-    stage('Deploy Image') {
-      steps{
-         script {
-            docker.withRegistry('', registryCredential ) {
-            dockerImage.push()
-          }
+
+    stage('Push image') {
+        docker.withRegistry('https://registry.hub.docker.com/', 'dockerhub') {
+            app.push("${env.BUILD_NUMBER}")
+            app.push("latest")
         }
-      }
     }
     stage('Remove Unused docker image') {
       steps{
-        sh "docker rmi $registry:$BUILD_NUMBER"
+        sh "docker rmi $registry:${env.BUILD_NUMBER}"
       }
     }
   }
