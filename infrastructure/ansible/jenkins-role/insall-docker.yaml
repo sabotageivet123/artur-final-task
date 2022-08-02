@@ -28,7 +28,7 @@
      - name: install docker
        shell: |
                sudo apt-get update
-               sudo apt-get install -y docker-ce docker-ce-cli containerd.io/etc/apt/sources.list.d/docker.list
+               sudo apt-get install -y docker-ce docker-ce-cli containerd.io
      
      - name: install docker-compose
        shell: |
