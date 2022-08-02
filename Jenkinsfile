@@ -18,7 +18,7 @@ pipeline {
       steps{
         script {
           dir("application") {
-            dockerImage = docker.build registry + ":$BUILD_NUMBER"
+            dockerImage = docker.build registry + ":${env.JOB_BASE_NAME}-$BUILD_NUMBER"
           }
         }
       }
@@ -34,7 +34,7 @@ pipeline {
     }
     stage('Remove Unused docker image') {
       steps{
-        sh "docker rmi $registry:$BUILD_NUMBER"
+        sh "docker rmi $registry:${env.JOB_BASE_NAME}-$BUILD_NUMBER"
       }
     }
   }

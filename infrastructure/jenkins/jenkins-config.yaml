@@ -84,4 +84,9 @@ credentials:
               privateKeySource:
                 directEntry:
                   privateKey: ${EC2_KEY}
-
+          - usernamePassword:
+              description: "Docker login"
+              id: "dockerhub"
+              password: ${DOCKER_PASS}
+              scope: GLOBAL
+              username: ${DOCKER_LOGIN}
