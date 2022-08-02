@@ -47,7 +47,7 @@ jobs:
               git {
                   id = 'configuration-as-code'
                   remote('git@github.com:sabotageivet123/artur-final-task.git')
-                  credentialsId(repo_key)
+                  credentialsId('repo_key')
               }
           }
       }
