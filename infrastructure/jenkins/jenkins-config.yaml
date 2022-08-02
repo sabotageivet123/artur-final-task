@@ -7,6 +7,39 @@ jenkins:
        - id: admin
          password: ${ADMIN_PW}
 
+  clouds:
+  - ec2Fleet:
+        name: ec2-fleet
+        awsCredentialsId: aws-creds
+        oldId: ""
+        computerConnector:
+          sshConnector:
+            credentialsId: "fleet_key" # This is the name of the ssh key secret configured from secret manager
+            launchTimeoutSeconds: 60
+            maxNumRetries: 10
+            port: 22
+            retryWaitTime: 15
+            sshHostKeyVerificationStrategy: "nonVerifyingKeyVerificationStrategy"
+        region: us-west-2
+        fleet: my-fleet
+        fsRoot: "/home/ec2-user"
+        privateIpUsed: false
+        alwaysReconnect: true
+        labelString: myLabel
+        idleMinutes: 5
+        minSize: 1
+        maxSize: 1
+        numExecutors: 1
+        addNodeOnlyIfRunning: true
+        restrictUsage: true
+        scaleExecutorsByWeight: true
+        initOnlineTimeoutSec: 181
+        initOnlineCheckIntervalSec: 13
+        cloudStatusIntervalSec: 11
+        disableTaskResubmit: true
+        noDelayProvision: true
+
+
 jobs:
   - script: >
       multibranchPipelineJob('artur-last-task') {
@@ -14,7 +47,7 @@ jobs:
               git {
                   id = 'configuration-as-code'
                   remote('git@github.com:sabotageivet123/artur-final-task.git')
-                  credentials(repo_key)
+                  credentialsId(repo_key)
               }
           }
       }
@@ -43,4 +76,12 @@ credentials:
               privateKeySource:
                 directEntry:
                   privateKey: ${REPO_KEY}
+          - basicSSHUserPrivateKey:
+              scope: GLOBAL
+              id: fleet_key
+              username: ec2-user
+              description: "SSH For EC2"
+              privateKeySource:
+                directEntry:
+                  privateKey: ${EC2_KEY}
 
