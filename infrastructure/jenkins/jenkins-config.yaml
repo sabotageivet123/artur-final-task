@@ -14,7 +14,7 @@ jenkins:
         remoteFS: "/home/jenkins"
         labelString: "kuber"
         launcher:
-          SSHLauncher:
+          ssh:
             host: "10.0.20.100"
             port: "22"
             credentialsId: fleet_key
@@ -90,7 +90,7 @@ credentials:
           - basicSSHUserPrivateKey:
               scope: GLOBAL
               id: repo_key
-              username: artur
+              username: ubuntu
               description: "Repo key"
               privateKeySource:
                 directEntry:
