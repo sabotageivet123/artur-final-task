@@ -11,7 +11,7 @@ func appHandler(w http.ResponseWriter, r *http.Request) {
 
   fmt.Println(time.Now(), "Hello from my new fresh server")
   if(r.URL.Path == "/ping") {
-    w.Write([]byte(`{"status":"OK"}`))
+    w.Write([]byte(`{"status":"OK There"}`))
   } 
 
 }
