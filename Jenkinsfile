@@ -46,5 +46,4 @@ pipeline {
         sh "docker rmi $registry:${env.JOB_BASE_NAME}-$BUILD_NUMBER"
       }
     }
-  }
 }
