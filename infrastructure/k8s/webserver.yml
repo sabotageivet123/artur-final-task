@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: goserver-final
-        image: adsfadsfasdfasdf1234134sdfasdf/goserver-final:latest
+        image: adsfadsfasdfasdf1234134sdfasdf/goserver-final:develop-12
 ---
 apiVersion: v1
 kind: Service

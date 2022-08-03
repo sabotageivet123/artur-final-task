@@ -6,19 +6,34 @@ ANSDIR="./ansible"
 
 function init-infra-dev() {
   echo 'Start create infra!'
-  cd $TERDIR/develop; terraform init && terraform apply -auto-approve; cd $CURDIR;
+  #cd $TERDIR/develop; terraform init && terraform apply -auto-approve; cd $CURDIR;
+  #cd $TERDIR/jenkins; terraform init && terraform apply -auto-approve; cd $CURDIR;
+  #generate_keys
+  #gh_add_key
+  #do_ansible_on_kuber
+  do_ansible_on_jenkins
+}
+
+function do_ansible_on_kuber() {
   cd $ANSDIR; 
   ansible-playbook -i hosts ./kubernetes-master/users.yaml; 
   ansible-playbook -i hosts ./kubernetes-master/install-kubernetes.yaml;
   ansible-playbook -i hosts ./kubernetes-master/create-master.yaml;
   ansible-playbook -i hosts ./kubernetes-node/add-workers.yaml;
-  ansible-playbook -i hosts ./kubernetes-master/generate-key.yaml;
+  ansible-playbook -i hosts ./kubernetes-master/create-deployment.yaml;
   cd $CURDIR
-  cd $TERDIR/jenkins; terraform init && terraform apply -auto-approve; cd $CURDIR;
+}
+
+function do_ansible_on_jenkins() {
   cd $ANSDIR;
   ansible-playbook -i hosts ./jenkins-role/insall-docker.yaml;
-  ansible-playbook -i hosts ./jenkins-role/generate-key.yaml;
+  ansible-playbook -i hosts ./jenkins-role/run-jenkins.yaml;
   cd $CURDIR
+}
+
+function generate_keys() {
+  ansible-playbook -i hosts ./kubernetes-master/generate-key.yaml;
+  ansible-playbook -i hosts ./jenkins-role/generate-key.yaml;
 }
 
 function destroy-infra-dev() {

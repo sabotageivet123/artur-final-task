@@ -1,21 +1,16 @@
 - hosts: jenkins
   remote_user: ubuntu
-  become: yes
-  become_method: sudo
-  become_user: root
   gather_facts: yes
   connection: ssh
   tasks:
     - name: generate key
-      user: ubuntu
       shell: |
         ssh-keygen -o -a 100 -t ed25519 -f ~/.ssh/id_rsa -C "jenkins" -q -N ""
       args:
         chdir: $HOME
 
     - name: generate key
-      user: ubuntu
-      shell: cat ~/.ssh/id_ed25519.pub
+      shell: cat ~/.ssh/id_rsa.pub
       register: key_for_git_read
     - debug:
        msg: "{{ key_for_git_read.stdout }}"

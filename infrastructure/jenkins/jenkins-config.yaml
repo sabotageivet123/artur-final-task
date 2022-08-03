@@ -6,6 +6,19 @@ jenkins:
       users:
        - id: admin
          password: ${ADMIN_PW}
+  authorizationStrategy: loggedInUsersCanDoAnything
+
+  nodes:
+    - permanent:
+        name: "kuber-agent"
+        remoteFS: "/home/jenkins"
+        labelString: "kuber"
+        launcher:
+          SSHLauncher:
+            host: "10.0.20.100"
+            port: "22"
+            credentialsId: fleet_key
+            sshHostKeyVerificationStrategy: "nonVerifyingKeyVerificationStrategy"
 
   clouds:
   - ec2Fleet:
@@ -51,6 +64,12 @@ jobs:
               }
           }
       }
+      triggers {
+        periodicFolderTrigger {
+          interval('1')
+        }
+      }
+      
 
 tool:
   git:
@@ -84,4 +103,9 @@ credentials:
               privateKeySource:
                 directEntry:
                   privateKey: ${EC2_KEY}
-
+          - usernamePassword:
+              description: "Docker login"
+              id: "dockerhub"
+              password: ${DOCKER_PASS}
+              scope: GLOBAL
+              username: ${DOCKER_LOGIN}

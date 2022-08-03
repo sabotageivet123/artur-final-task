@@ -3,11 +3,17 @@
   gather_facts: yes
   connection: ssh
   tasks:
+    - name: Add github to know hosts
+      become: yes
+      become_user: kube
+      ignore_errors: yes
+      shell: if [ ! -n "$(grep "^github.com " ~/.ssh/known_hosts)" ]; then ssh-keyscan github.com >> ~/.ssh/known_hosts 2>/dev/null; fi
+
     - name: Clone repo
       ignore_errors: yes
       become: yes
       become_user: kube
-      shell: echo "yes" | git clone git@github.com:sabotageivet123/artur-final-task.git
+      shell: git clone git@github.com:sabotageivet123/artur-final-task.git
       args:
         chdir: $HOME
     

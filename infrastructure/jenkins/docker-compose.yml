@@ -15,7 +15,8 @@ services:
             - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
             - EC2_KEY=${EC2_KEY}
             - REPO_KEY=${REPO_KEY}
-
+            - DOCKER_LOGIN=${DOCKER_LOGIN}
+            - DOCKER_PASS=${DOCKER_PASS}
                            
 volumes:
   jenkins-data:

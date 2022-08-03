@@ -4,7 +4,7 @@ pipeline {
     registryCredential = 'dockerhub'
     dockerImage = ''
   }
-  agent any
+  agent {label "myLabel"}
   stages {
     stage('Cloning Git') {
       steps {
@@ -17,23 +17,33 @@ pipeline {
     stage('Building image') {
       steps{
         script {
-          dockerImage = docker.build("goserver-final", "-f application/Dockerfile .") registry + ":$BUILD_NUMBER"
+          dir("application") {
+            dockerImage = docker.build registry + ":${env.JOB_BASE_NAME}-$BUILD_NUMBER"
+          }
         }
       }
     }
     stage('Deploy Image') {
       steps{
          script {
-            docker.withRegistry('', registryCredential ) {
-            dockerImage.push()
+            docker.withRegistry('https://registry.hub.docker.com', registryCredential ) {
+              dockerImage.push()
           }
         }
       }
     }
+    stage('Deploy to webserver version on Kubernetes') {
+      agent { label 'kuber' }
+        steps{
+          script {
+              sh "kubectl set image deployment/goserver goserver-final=adsfadsfasdfasdf1234134sdfasdf/goserver-final:${env.JOB_BASE_NAME}-$BUILD_NUMBER"
+            }
+          }
+        }
     stage('Remove Unused docker image') {
       steps{
-        sh "docker rmi $registry:$BUILD_NUMBER"
+        sh "docker rmi $registry:${env.JOB_BASE_NAME}-$BUILD_NUMBER"
       }
     }
-  }
+ }
 }

@@ -21,28 +21,14 @@ provider "aws" {
   region  = "us-west-2"
 }
 
-resource "aws_instance" "kube-master" {
-  ami           = "ami-08d70e59c07c61a3a"
-  instance_type = "t3.small"
-  key_name      = "final-test"
-
-  tags = {
-    Name = var.instance_name
-    Purpose = var.purpose
-    created_at = timestamp()
-  }
+module "vpc" {
+  source    = "./vpc"
+  namespace = var.namespace
 }
 
-resource "aws_instance" "kube-worker" {
-  count         = 1
-  ami           = "ami-08d70e59c07c61a3a"
-  instance_type = "t3.micro"
-  key_name      = "final-test"
-
-  tags = {
-    Name = "${var.instance_worker_name}${count.index}"
-    Purpose = "${var.purpose_worker}web"
-    created_at = timestamp()
-  }
+module "ec2" {
+  source     = "./ec2"
+  vpc        = module.vpc.vpc
+  sg_pub_id  = module.vpc.sg_pub_id
+  sg_priv_id = module.vpc.sg_priv_id
 }
-
