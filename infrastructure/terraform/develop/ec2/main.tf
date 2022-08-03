@@ -6,7 +6,7 @@ resource "aws_instance" "kube-master" {
   instance_type = "t3.small"
   key_name      = "final-test"
   subnet_id                   = var.vpc.public_subnets[0]
-  private_ip    = ["10.0.20.100"]
+  private_ip    = "10.0.20.100"
   vpc_security_group_ids      = [var.sg_pub_id]
 
   tags = {

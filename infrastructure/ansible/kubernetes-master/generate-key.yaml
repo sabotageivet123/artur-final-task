@@ -1,19 +1,20 @@
 - hosts: master
-  remote_user: ubuntu
-  become: yes
-  become_method: sudo
-  become_user: root
+  remote_user: kube
   gather_facts: yes
   connection: ssh
   tasks:
     - name: generate key
+      become: yes
+      become_user: kube
       shell: |
-        ssh-keygen -o -a 100 -t ed25519 -f ~/.ssh/id_ed25519 -C "master-node" -q -N ""
+        ssh-keygen -o -a 100 -t ed25519 -f ~/.ssh/id_rsa -C "master-node" -q -N ""
       args:
         chdir: $HOME
 
-    - name: generate key
-      shell: cat ~/.ssh/id_ed25519.pub
+    - name: get pub key
+      become: yes
+      become_user: kube
+      shell: cat ~/.ssh/id_rsa.pub
       register: key_for_git_read
     - debug:
        msg: "{{ key_for_git_read.stdout }}"
