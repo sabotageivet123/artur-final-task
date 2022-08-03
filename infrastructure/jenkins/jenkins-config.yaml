@@ -15,7 +15,6 @@ jenkins:
         labelString: "kuber"
         launcher:
           ssh:
-            user: ubuntu
             host: "10.0.20.100"
             port: "22"
             credentialsId: repo_key
