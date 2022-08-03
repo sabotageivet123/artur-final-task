@@ -11,7 +11,7 @@ jenkins:
   nodes:
     - permanent:
         name: "kuber-agent"
-        remoteFS: "/home/jenkins"
+        remoteFS: "/home/kube"
         labelString: "kuber"
         launcher:
           ssh:
@@ -90,7 +90,7 @@ credentials:
           - basicSSHUserPrivateKey:
               scope: GLOBAL
               id: repo_key
-              username: ubuntu
+              username: kube
               description: "Repo key"
               privateKeySource:
                 directEntry:
