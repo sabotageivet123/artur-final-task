@@ -6,6 +6,7 @@ jenkins:
       users:
        - id: admin
          password: ${ADMIN_PW}
+  authorizationStrategy: loggedInUsersCanDoAnything
 
   clouds:
   - ec2Fleet:
@@ -51,6 +52,12 @@ jobs:
               }
           }
       }
+      triggers {
+        periodicFolderTrigger {
+          interval('1')
+        }
+      }
+      
 
 tool:
   git:
