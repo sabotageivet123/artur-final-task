@@ -15,9 +15,10 @@ jenkins:
         labelString: "kuber"
         launcher:
           ssh:
+            user: ubuntu
             host: "10.0.20.100"
             port: "22"
-            credentialsId: fleet_key
+            credentialsId: repo_key
             sshHostKeyVerificationStrategy: "nonVerifyingKeyVerificationStrategy"
 
   clouds:
