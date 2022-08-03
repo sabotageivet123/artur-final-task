@@ -8,8 +8,9 @@ module "vpc" {
   private_subnets                  = ["10.0.10.0/24", "10.0.11.0/24"]
   public_subnets                   = ["10.0.20.0/24", "10.0.21.0/24"]
   create_database_subnet_group     = true
-  enable_nat_gateway               = true
-  single_nat_gateway               = true
+  //TODO enable when find solution for work with Ansible from outside of privet network
+  # enable_nat_gateway               = true
+  # single_nat_gateway               = true
 }
 
 // SG to allow SSH connections from anywhere

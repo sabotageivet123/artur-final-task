@@ -20,9 +20,12 @@ resource "aws_instance" "kube-worker" {
   ami           = "ami-08d70e59c07c61a3a"
   instance_type = "t3.micro"
   key_name      = "final-test"
-  associate_public_ip_address = false
-  subnet_id                   = var.vpc.private_subnets[0]
-  vpc_security_group_ids      = [var.sg_priv_id]
+  //TODO find how to work with privet EC2 with ansible outside privet network e.g from admin workstation
+  subnet_id                   = var.vpc.public_subnets[0]
+  vpc_security_group_ids      = [var.sg_pub_id]
+  # associate_public_ip_address = false
+  # subnet_id                   = var.vpc.private_subnets[0]
+  # vpc_security_group_ids      = [var.sg_priv_id]
 
   tags = {
     Name = "${var.instance_worker_name}-${count.index}"
