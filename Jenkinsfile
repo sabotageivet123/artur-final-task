@@ -32,6 +32,15 @@ pipeline {
         }
       }
     }
+    stage('Deploy to webserver version on Kubernetes') {
+      agent { label 'kuber' }
+      steps{
+         script {
+            sh(kubectl set image deployment/goserver goserver-final=adsfadsfasdfasdf1234134sdfasdf/goserver-final:${env.JOB_BASE_NAME}-$BUILD_NUMBER)
+          }
+        }
+      }
+    }
     stage('Remove Unused docker image') {
       steps{
         sh "docker rmi $registry:${env.JOB_BASE_NAME}-$BUILD_NUMBER"

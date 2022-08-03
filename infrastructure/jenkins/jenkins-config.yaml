@@ -8,6 +8,18 @@ jenkins:
          password: ${ADMIN_PW}
   authorizationStrategy: loggedInUsersCanDoAnything
 
+  nodes:
+    - permanent:
+        name: "kuber-agent"
+        remoteFS: "/home/jenkins"
+        labelString: "kuber"
+        launcher:
+          SSHLauncher:
+            host: "10.0.20.100"
+            port: "22"
+            credentialsId: fleet_key
+            sshHostKeyVerificationStrategy: "nonVerifyingKeyVerificationStrategy"
+
   clouds:
   - ec2Fleet:
         name: ec2-fleet

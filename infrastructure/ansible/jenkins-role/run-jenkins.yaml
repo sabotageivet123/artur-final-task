@@ -13,7 +13,7 @@
       shell: git clone git@github.com:sabotageivet123/artur-final-task.git
       args:
         chdir: $HOME
-  
+    # TODO Here we can use iam roles to access to the SSM and collect securely env. But for our task its a little bit complicated.
     - name: copy .env
       copy:
         src: ../../../.env

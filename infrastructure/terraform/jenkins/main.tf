@@ -21,10 +21,17 @@ provider "aws" {
   region  = "us-west-2"
 }
 
+data "aws_subnet" "public" {
+    filter {
+      name = "develop-vpc"
+    }
+}
+
 resource "aws_instance" "jenkins" {
   ami           = "ami-08d70e59c07c61a3a"
   instance_type = "t3.micro"
   key_name      = "final-test"
+  subnet_id = "${aws_subnet.public.id}"
 
   tags = {
     Name = var.instance_name

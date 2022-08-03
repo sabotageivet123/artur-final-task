@@ -18,6 +18,7 @@ function init-infra-dev() {
   cd $ANSDIR;
   ansible-playbook -i hosts ./jenkins-role/insall-docker.yaml;
   ansible-playbook -i hosts ./jenkins-role/generate-key.yaml;
+  ansible-playbook -i hosts ./jenkins-role/run-jenkins.yaml;
   cd $CURDIR
 }
 
