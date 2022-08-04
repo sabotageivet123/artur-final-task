@@ -42,3 +42,4 @@ Initial multibranch job check GitHub repository every 1 minutes for a Jenkinsfil
 Basic logic it: download source codes, build docker image, save artifact to docker hub, update deployment on kubernetes node for use that builded image.
 
 
+![alt text](https://github.com/sabotageivet123//blob/artur-final-task/schema.png?raw=true)
