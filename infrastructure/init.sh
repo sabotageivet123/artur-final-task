@@ -8,6 +8,7 @@ function init-infra-dev() {
   echo 'Start create infra!'
   cd $TERDIR/develop; terraform init && terraform apply -auto-approve; cd $CURDIR;
   # cd $TERDIR/jenkins; terraform init && terraform apply -auto-approve; cd $CURDIR;
+  # generate_inventory
   # generate_keys
   # gh_add_key
   # do_ansible_on_kuber
@@ -25,9 +26,7 @@ function do_ansible_on_kuber() {
 }
 
 function generate_inventory() {
-  sudo apt-get install python3-pip
-  pip3 install boto3 --user
-  python3 ./ansible/inventory.py > ./ansible/hosts
+  ansible-playbook ./ansible-master
 }
 
 function do_ansible_on_jenkins() {
