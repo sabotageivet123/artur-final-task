@@ -6,12 +6,12 @@ ANSDIR="./ansible"
 
 function init-infra-dev() {
   echo 'Start create infra!'
-  #cd $TERDIR/develop; terraform init && terraform apply -auto-approve; cd $CURDIR;
-  #cd $TERDIR/jenkins; terraform init && terraform apply -auto-approve; cd $CURDIR;
-  #generate_keys
-  #gh_add_key
-  #do_ansible_on_kuber
-  do_ansible_on_jenkins
+  cd $TERDIR/develop; terraform init && terraform apply -auto-approve; cd $CURDIR;
+  # cd $TERDIR/jenkins; terraform init && terraform apply -auto-approve; cd $CURDIR;
+  # generate_keys
+  # gh_add_key
+  # do_ansible_on_kuber
+  # do_ansible_on_jenkins
 }
 
 function do_ansible_on_kuber() {
@@ -22,6 +22,12 @@ function do_ansible_on_kuber() {
   ansible-playbook -i hosts ./kubernetes-node/add-workers.yaml;
   ansible-playbook -i hosts ./kubernetes-master/create-deployment.yaml;
   cd $CURDIR
+}
+
+function generate_inventory() {
+  sudo apt-get install python3-pip
+  pip3 install boto3 --user
+  python3 ./ansible/inventory.py > ./ansible/hosts
 }
 
 function do_ansible_on_jenkins() {
@@ -37,8 +43,8 @@ function generate_keys() {
 }
 
 function destroy-infra-dev() {
-  cd $TERDIR/develop; terraform destroy -auto-approve; cd $CURDIR;
   cd $TERDIR/jenkins; terraform destroy -auto-approve; cd $CURDIR;
+  cd $TERDIR/develop; terraform destroy -auto-approve; cd $CURDIR;
 }
 
 function gh_add_key() {

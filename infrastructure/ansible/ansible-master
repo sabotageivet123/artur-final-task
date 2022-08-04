@@ -1,16 +1,26 @@
 ---
-- name: Bootstrap playbook
+- name: Bootstrap main workstation
   # Don't gather facts automatically because that will trigger
   # a connection, which needs to check the remote host key
   gather_facts: false
-  hosts: "master, worker"
+  hosts: localhost
+  vars:
+    package_names:
+      - python3-pip
   tasks:
-    - name: Check known_hosts for {{ inventory_hostname }}
-      local_action: shell ssh-keygen -F {{ inventory_hostname }}
-      register: has_entry_in_known_hosts_file
-      changed_when: false
-      ignore_errors: true
-    - name: Ignore host key for {{ inventory_hostname }} on first run
-      when: has_entry_in_known_hosts_file.rc == 1
-      set_fact:
-        ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
+    - name: "Check if listed package is installed "
+      command: dpkg-query -l "{{ item }}"
+      loop: "{{ package_names }}"
+      register: package_check
+    
+    - name: install package
+      when: package_check is failed
+      shell: |
+              apt-get install python3-pip
+              pip3 install boto3 --user
+
+    - name: create host file
+      shell: python3 ./inventory.py > hosts
+
+
+    
