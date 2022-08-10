@@ -3,8 +3,8 @@ Final task for ITEA DevOps Course
 
 Prerequisites:
 1) Optional should use Terraform Cloud with workspaces: develop, jenkins. You should add secrets for AWS: AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY.
-2) Generate access token for github and put to the /tmp/token. It need for adding generated ssh keys for access from kubernetes and jenkins.
-3) Highly recomended create key on AWS or import your own to AWS.
+2) Optional Generate access token for github and put to the /tmp/token. It need for adding generated ssh keys to the github for access from kubernetes and jenkins.
+3) Highly recomended create ssh key on AWS or import your own to AWS .
 4) IMPORTANT!!! MUST to manually create basic ASG in AWS with name "my-fleet" in case if this didn't do, jenkins wouldn't start.
 5) MUST add .env file to ./infrastructure/ with secretes parameters:
 
